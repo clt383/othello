@@ -63,9 +63,11 @@ const board = Board.makeBoard();
 $(() => {
 
   $("#black").on("click", function() {
+    $("#phase").text("black");
     putStone(0);
   });
   $("#white").on("click", function() {
+    $("#phase").text("white");
     putStone(1);
   });
 
