@@ -1,0 +1,13 @@
+.board{
+  width: 720px;
+  height: 720px;
+  background-color: #1b8d3d;
+  border: solid 4px black;
+}
+.row{
+  line-height: 0;
+}
+img{
+  width: 90px;
+  height: 90px;
+}

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+html(lang="ja")
+  head
+    meta(charset="UTF-8")
+    link(rel="stylesheet", href="style.css")
+    script(src="https:\/\/ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js")
+    script(src="index.js")
+    title Othello
+  body
+    div(class="board")
+      - for(var i = 0; i < 8; i++)
+        div(class="row")
+          - for(var j = 0; j < 8; j++)
+            - if(i == 3 && j == 3 || i == 4 && j == 4)
+              img(src="images/white.png", alt="square", id=i + "," + j, name="square")
+            - else if(i == 3 && j == 4 || i == 4 && j == 3)
+              img(src="images/black.png", alt="square", id=i + "," + j, name="square")
+            - else
+              img(src="images/nothing.png", alt="square", id=i + "," + j, name="square")
+    
+    div(id="phase") Black
+    button(id="black") black
+    button(id="white") white
