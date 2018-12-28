@@ -22,6 +22,12 @@ class Board {
     return new Board(b);
   }
 
+  getNum(n) {
+    const arr = [];
+    this.board.forEach(e1 => {e1.forEach(e2 => {if(e2 == n){arr.push(n)}})});
+    return arr.length
+  }
+
   isAvailable(point) {
     if (0 <= point.y && point.y <= this.board.length - 1 && 0 <= point.x && point.x <= this.board[point.y].length - 1) {
       return true
@@ -87,6 +93,9 @@ function putStone(phase) {
           $(id).attr("src", "images/black.png")
           board.update(e, phase)
         })
+        $("#blackresult").text(`${board.getNum(0)}`);
+        $("#whiteresult").text(`${board.getNum(1)}`);
+        $("#pass").off("click");
         $("img").off("click");
       } else {
         $(this).attr("src", "images/white.png")
@@ -95,6 +104,9 @@ function putStone(phase) {
           $(id).attr("src", "images/white.png")
           board.update(e, phase)
         })
+        $("#blackresult").text(`${board.getNum(0)}`);
+        $("#whiteresult").text(`${board.getNum(1)}`);
+        $("#pass").off("click");
         $("img").off("click");
       }
     }
@@ -107,21 +119,21 @@ function putStone(phase) {
   Pointにおける場合の裏返す間のPoint
 */
 function searchToMyColor(s, p) {
+  const arrs = [false, []];
   if(board.getPoint(s) == 2) {
-    const arrs = [false, []];
     for(var y = -1; y <=1; y++) {
       for(var x = -1; x <=1; x++) {
         if(y == 0 && x == 0) {
           continue
         }
-        searchReversePoint(0, p, arrs, Point._(y, x), s.plus(y, x))
+        searchReversePoint(0, p, arrs, Point._(y, x), s.plus(y, x));
       }
     }
     return arrs
   }
+  return arrs
 }
 
-// ヒットしたら逆戻りしてreversePointを探す関数を実装する
 function searchReversePoint(index, phase, arr, p, nPoint) {
   if(!board.isAvailable(nPoint)) { return; } else {
     const n = board.getPoint(nPoint);
@@ -129,7 +141,6 @@ function searchReversePoint(index, phase, arr, p, nPoint) {
       arr[0] = true;
       addReverses(index, arr, nPoint.plus(-p.y, -p.x), p)
     } else if (n == ((phase + 1) % 2)) {
-      // ここでPushしなくする
       searchReversePoint(index+1, phase, arr, p ,nPoint.plus(p.y, p.x))
     } else if(!arr[0]) {
       arr[1].length = 0;
